@@ -208,3 +208,306 @@ class Person(
     KotlinMaker { /*...*/ }
 ```
 
+긴 상위 유형 목록이 있는 클래스의 경우 콜론 다음에 줄 바꿈을 넣고 모든 상위 유형 이름의 시작열을 맞춘다.
+
+```Kotlin
+class MyFavouriteVeryLongClassHolder :
+    MyLongHolder<MyFavouriteVeryLongClass>(),
+    SomeOtherInterface,
+    AndAnotherOne {
+
+    fun foo() { /*...*/ }
+}
+```
+
+클래스 헤더가 길 때 클래스 헤더와 본문을 명확하게 구분하려면 클래스 헤더 다음에 빈 줄을 넣거나 여는 중괄호를 별도의 줄에 넣습니다.
+
+```Kotlin
+class MyFavouriteVeryLongClassHolder :
+    MyLongHolder<MyFavouriteVeryLongClass>(),
+    SomeOtherInterface,
+    AndAnotherOne
+{
+    fun foo() { /*...*/ }
+}
+```
+
+생성자 매개변수에는 공백 4
+
+### Modifier
+Modifier : 선언이나 변수 앞에 붙이는 예약어<br/>
+여러 Modifier를 쓰는 경우 아래 순서로 입력
+
+```
+public / protected / private / internal
+expect / actual
+final / open / abstract / sealed / const
+external
+override
+lateinit
+tailrec
+vararg
+suspend
+inner
+enum / annotation / fun // as a modifier in `fun interface`companion
+inline
+infix
+operator
+data
+```
+
+모든 annotation은 modifier 앞에 둔다.
+
+```Kotlin
+@Named("Foo")
+private val foo: Foo
+```
+
+라이브러리에서 작업하지 않는한 중복 modifier는 생략
+
+### Annotations
+어노테이션은 일반적으로 어노테이션이 붙을 선언 이전에 같은 들여쓰기로 별도의 줄에 위치
+
+```Kotlin
+@Target(AnnotationTarget.PROPERTY)
+annotation class JsonExclude
+```
+
+인수가 없는 어노테이션은 여러개를 같은 줄에 작성 가능
+
+```Kotlin
+@JsonExclude @JvmField
+var x: String
+```
+
+인수가 없는 단일 어노테이션은 선언과 같은 줄에 작성 가능
+
+```Kotlin
+@Test fun foo() { /*...*/ }
+```
+
+### Function
+함수 시그너치가 한 줄에 들어가지 않으면 다음과 같이 작성
+
+```Kotlin
+fun longMethodName(
+    argument: ArgumentType = defaultValue,
+    argument2: AnotherArgumentType,
+): ReturnType {
+    // body
+}
+```
+
+함수 매개변수에는 공백 4개 사용
+
+단일 표현식으로 구성된 바디를 가진 함수는 표현식 바디 사용 선호
+
+```Kotlin
+fun foo(): Int {     // bad
+    return 1
+}
+
+fun foo() = 1        // good
+```
+
+### 속성 서식
+간단한 읽기 전용 속성의 경우 한 줄 형식 사용
+
+```Kotlin
+val isEmpty: Boolean get() = size == 0
+```
+
+보다 복잡한 속성의 경우 항상 키워드 `get`과 `set`을 별도의 줄에 입력
+
+```Kotlin
+val foo: String
+    get() { /*...*/ }
+```
+
+이니셜라이저가 있는 속성의 경우 이니셜라이저가 길면 `=` 다음에 줄 바꿈을 하고 4칸 들여쓰기 한다.
+
+```Kotlin
+private val defaultCharset: Charset? =
+    EncodingRegistry.getInstance().getDefaultCharsetForPropertiesFiles(file)
+```
+
+### 제어문
+`if`나 `when`문의 조건이 여러 줄일 경우 항상 문장의 본문 주위에 중괄호 사용<br/>
+조건의 두 번째 줄부터 앞에 4칸의 공백 삽입<br/>
+조건을 닫는 소괄호는 여는 중괄호와 함께 별도의 줄에 작성
+
+```Kotlin
+if (!component.isSyncing &&
+    !hasAnyKotlinRuntimeInScope(module)
+) {
+    return createKotlinNotConfiguredPanel(module)
+}
+```
+
+`else`, `catch`, `finally`, `do-while`문의 `while` 키워드의 같은 줄에 여는 중괄호 작성
+
+```Kotlin
+if (condition) {
+    // body
+} else {
+    // else part
+}
+
+try {
+    // body
+} finally {
+    // cleanup
+}
+
+```
+
+`when`문에서 실행 부분이 한 라인 이상일 경우 인접한 실행 블록을 빈 줄로 분리
+
+```Kotlin
+private fun parsePropertyValue(propName: String, token: Token) {
+    when (token) {
+        is Token.ValueToken ->
+            callback.visitValue(propName, token.value)
+
+        Token.LBRACE -> { // ...
+        }
+    }
+}
+```
+
+짧은 조건, 실행 라인은 중괄호 없이 한 라인에 작성
+
+```Kotlin
+when (foo) {
+    true -> bar() // good
+    false -> { baz() } // bad
+}
+```
+
+### 메소드 호출
+메소드 호출 시에 인자들이 길어 한 줄에 작성하지 못할 경우 여는 소괄호 뒤에서 줄바꿈<br/>
+서로 연관있는 인자끼리 묶어서 작성<br/>
+
+```Kotlin
+drawSquare(
+    x = 10, y = 10,
+    width = 100, height = 100,
+    fill = true
+)
+```
+
+인자 이름과 값을 구분하는 `=` 앞, 뒤에 공백 삽입
+
+### 함수 호출 체이닝 구조
+옵셔널 체이닝을 사용하거나 체이닝을 사용하는데 한 줄을 넘어간다면 `?.`와 `.`가 제일 앞에 오고 들여쓰기를 해서 작성
+
+```Kotlin
+val anchor = owner
+    ?.firstChild!!
+    .siblings(forward = true)
+    .dropWhile { it is PsiComment || it is PsiWhiteSpace }
+```
+
+### 람다
+- 파라미터를 나타내는 화살표 주위에 공백 사용
+- 표현식의 중괄호 주위에 공백 사용
+- 호출에 사용된 람다가 한 개인 경우 가능한 소괄호 제거(마지막 인자가 람다이거나, 인자가 람다 뿐이거나)
+- 람다의 파라미터가 하나뿐이고 그 타입을 컴파일러가 추론 가능한 경우 `it` 사용 가능
+
+```Kotlin
+list.filter { it > 10 }
+```
+
+람다에 `label`을 할당할 경우 `label`과 여는 중괄호 사이에 공백 사용 안함
+
+```Kotlin
+fun foo() {
+    ints.forEach lit@{
+        // ...
+    }
+}
+```
+
+다중 라인 람다에서 파라미터의 이름을 선언할 때, 첫 줄에 파라미터 이름과 화살표를 선언하고 개행
+
+```Kotlin
+appendCommaSeparated(properties) { prop ->
+    val propertyValue = prop.get(obj)  // ...
+}
+```
+
+파라미터 목록이 한 줄로 표현하기 적합하지 않은 경우 파라미터 목록과 화살표를 들여쓰기와 함께 개행
+
+```Kotlin
+foo {
+   context: Context,
+   environment: Env
+   ->
+   context.configureEnv(environment)
+}
+```
+
+### Trailing 콤마(,)
+
+## 4. Documentation Comments
+- 문서 주석을 사용할 경우 `/**`로 시작
+- 각 줄에 `*` 사용
+- 닫을 때는 `*/`
+
+```Kotlin
+/**
+ * This is a documentation comment
+ * on multiple lines.
+ */
+```
+
+짧은 주석은 한 줄에 올 수 있다.
+
+```Kotlin
+/** This is a short documentation comment. */
+```
+
+- 일반적으로 `@param`과 `@return` 태그는 사용하지 말 것
+- 파라미터 및 반환 값에 대한 설명을 주석 내용에 직접 포함시키고 언급된 모든 파라미터에 링크 추가
+- 주석 내용의 흐름에 맞지 않는 장황한 설명이 필요한 경우만 `@param` 및 `@return` 사용
+
+```Kotlin
+// Avoid doing this:
+
+/**
+ * Returns the absolute value of the given number.
+ * @param number The number to return the absolute value for.
+ * @return The absolute value.
+ */
+fun abs(number: Int) { /*...*/ }
+
+// Do this instead:
+
+/**
+ * Returns the absolute value of the given [number].
+ */
+fun abs(number: Int) { /*...*/ }
+```
+
+## 5. Avoid redundant constructs
+필요없는 요소들은 모두 배제한다.<br/>
+명확성을 위해 코드에 불필요한 구문 요소를 남겨두지 않는다.
+
+- 아무것도 반환하지 않는 함수의 `Unit` 반환형
+- 세미콜론
+- 문자열 템플릿에서의 안써도 되는 중괄호
+
+```Kotlin
+// Unit 반환형
+fun foo() { // ": Unit" is omitted here
+
+}
+
+// 문자열 템플릿에서의 안써도 되는 중괄호
+println("$name has ${children.size} children")
+```
+
+## 6. Idiomatic use of language features
+언어의 기능들을 관용적으로 사용하기
+
+### 불변성(Immutability)
