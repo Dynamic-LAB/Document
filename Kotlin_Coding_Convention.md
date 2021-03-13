@@ -511,3 +511,224 @@ println("$name has ${children.size} children")
 언어의 기능들을 관용적으로 사용하기
 
 ### 불변성(Immutability)
+Kotlin은 변하지 않는 데이터를 사용하는 것 선호<br/>
+로컬 변수와 속성이 초기화된 이후에 수정되지 않는다면 항상 var보다 val로 선언
+
+- Immutable 컬렉션을 선언할 때는 항상 `Collection`, `List`, `Set`, `Map`과 같은 인터페이스 사용
+- 컬렉션 인스턴스를 생성할 때 가능한 Immutable 컬렉션 타입으로 생성할 것
+- 기본적으로 Kotlin에서 `List`는 Read-Only
+
+```Kotlin
+// Bad: use of mutable collection type for value which will not be mutated
+fun validateValue(actualValue: String, allowedValues: HashSet<String>) { ... }
+
+// Good: immutable collection type used instead
+fun validateValue(actualValue: String, allowedValues: Set<String>) { ... }
+
+// Bad: arrayListOf() returns ArrayList<T>, which is a mutable collection type
+val allowedValues = arrayListOf("a", "b", "c")
+
+// Good: listOf() returns List<T>
+val allowedValues = listOf("a", "b", "c")
+```
+
+### 기본 매개변수 값
+오버로드된 함수를 선언한느 것보다 기본 매개변수 값이 있는 함수를 선언하는 것을 선호
+
+```Kotlin
+// Bad
+fun foo() = foo("a")
+fun foo(a: String) { /*...*/ }
+
+// Good
+fun foo(a: String = "a") { /*...*/ }
+```
+
+### 타입 Aliases
+코드내에서 여러 번 사용되는 함수 타입 또는 타입 파라미터가 있는 경우 해당 타입 별칭을 정의하는 것을 선호
+
+```Kotlin
+typealias MouseClickHandler = (Any, MouseEvent) -> Unit
+typealias PersonIndex = Map<String, Person>
+```
+
+### 람다 매개변수
+람다가 짧고 중첩되어있지 않다면 `it` 사용
+
+```Kotlin
+// good
+list.forEach {
+  println(it)
+}
+
+// bad
+list.forEach { n ->
+  println(n)
+}
+```
+
+### 람다에서의 반환
+- 람다에 `label`이 붙어있는 `return`을 여러개 사용하지 않는다.
+- 하나의 반환 포인트를 갖도록 구조를 바꾸는 것을 고려
+- 위 항목이 불가능할 경우 람다를 익명함수로 변환하는 것을 고려
+- 람다의 마지막 문장에서 `label`이 붙은 `return`을 사용하지 않는다.
+
+### Named Arguments
+모든 매개변수의 의미가 문맥에서 완전히 명화갛지 않은 한 메소드가 동일한 원시 타입의 여러 매개변수를 가지거나 `boolean` 타입의 매개변수를 취할 때 Named Argument 구문을 사용
+
+```Kotlin
+drawSquare(x = 10, y = 10, width = 100, height = 100, fill = true)
+```
+
+### 조건문
+`try`, `if`, `when`은 아래와 같은 표현식을 사용할 것
+
+```Kotlin
+// good
+return if (x) foo() else bar()
+
+return when(x) {
+    0 -> "zero"
+    else -> "nonzero"
+}
+
+// bad
+if (x)
+    return foo()
+else
+    return bar()
+
+when(x) {
+    0 -> return "zero"
+    else -> return "nonzero"
+}
+```
+
+### `if`와 `when`
+조건이 2개라면 `when`보다 `if` 선호
+
+```Kotlin
+// 선호
+if (x == null) ... else ...
+
+// 비선호
+when (x) {
+    null -> // ...
+    else -> // ...
+}
+```
+
+조건이 3개 이상일 경우 `when` 선호
+
+### 조건문에 Nullable Boolean값 사용
+조건문에 `Nullable Boolean` 값을 사용하는 경우 `if (value == true)` 또는 `if (value == false)` check 사용
+
+### 반복문(loop)
+- loop에는 `filter`, `map`과 같은 고차 함수를 사용하는 것이 좋다.
+- `forEach`의 경우 `forEach`의 리시버가 `Nullable`이거나 `forEach`가 긴 호출 체인의 일부로 사용되는 경우가 아니면 일반적인 `for` 루프가 더 좋음
+- 복수의 고차 함수를 이용한 복잡한 표현과 루프를 선택할 때는 각 상황에서 실행되는 연산들의 비용을 이해하고 성능 고려 사항들을 확인
+
+### 범위를 사용하는 반복문
+`until` 키워드 사용<br/>
+`0..n - 1` : 0 <= x <= n-1<br/>
+`0 until n` : 0 <= x < n<br/>
+`until` 키워드가 가독성이 더 뛰어남
+
+```Kotlin
+for (i in 0..n - 1) { /*...*/ }  // bad
+for (i in 0 until n) { /*...*/ }  // good
+```
+
+### 문자열
+- 문자열 연결보다 문자열 템플릿 선호
+- 다중라인 문자열을 사용하는 것이 일반 문자열 리터럴에 개행문자를 사용하는 것보다 선호
+- 다중라인 문자열에서 결과 문자열이 내부에서 들여쓰기가 필요하면 `trimIndent` 사용, 필요하지 않으면 `trimMargin` 사용
+
+```Kotlin
+assertEquals(
+    """
+    Foo
+    Bar
+    """.trimIndent(),
+    value
+)
+
+val a = """if(a > 1) {
+          |    return a
+          |}""".trimMargin()
+```
+
+### 함수 vs 프로퍼티
+몇몇 경우에 인자 없는 함수는 Read-only 프로퍼티로 교체될 수 있다.
+
+아래의 경우 함수보다 프로퍼티가 좋다.
+- throw를 하지 않음
+- 계산 비용이 저렴하거나 한 번 실행 후 캐시되는 경우
+- 객체의 상태가 변경되지 않은 경우 호출에 대해 동일한 결과를 반환
+
+### 확장함수
+- 확장 함수를 자유롭게 사용
+- 항상 하나의 객체를 대상으로 주된 작업을 하는 함수를 가지고 있다면 그 객체를 리시버로 받아들이는 확장함수 고려
+- API의 오염을 최소화하기 위해 확장함수의 가시성을 필요범위 내로 제한
+- 필요에 따라 로컬 확장함수, 멤버 확장함수 또는 `private` 가시성을 가징 최상위 확장함수 사용
+
+### infix 함수
+유사한 역할을 하는 두 객체에서 동작할 때만 `infix`로 선언
+
+- good : `and`, `to`, `zip`
+- bad : `add`
+
+리시버 객체를 변형시키는 경우 메소드를 `infix`로 선언하지 않는다.
+
+### 팩토리 함수
+클래스의 팩토리 함수를 선언한다면 클래스와 동일한 이름을 피한다.<br/>
+팩토리 함수의 동작이 왜 특별한지 명확하게 하는 고유한 이름을 사용<br/>
+정말 특별한 의미가 없는 경우만 클래스와 동일한 이름 사용
+
+```Kotlin
+class Point(val x: Double, val y: Double) {
+    companion object {
+        fun fromPolar(angle: Double, radius: Double) = Point(...)
+    }
+}
+```
+
+만약 여러 개의 오버로딩된 생성자를 가진 객체가 서로 다른 슈퍼클래스 생성자를 호출하지 않고 기본 인자 값을 가진 단일 생성자로 축소할 수 없는 경우 오버로딩된 생성자를 팩토리 함수로 교체하는 것이 좋다.
+
+### 플랫폼 타입(Platform types)
+플랫폼 타입의 표현식을 반환하는 public function/method는 Kotlin 타입을 명시적으로 선언
+
+```Kotlin
+fun apiCall(): String = MyJavaApi.getProperty("name")
+```
+
+플랫폼 타입의 표현식으로 초기화되는 모든 속성(패키지 레벨 또는 클래스 레벨)은 Kotlin 타입을 명시적으로 선언
+
+```Kotlin
+class Person {
+    val name: String = MyJavaApi.getProperty("name")
+}
+```
+
+플랫폼 타입의 표현식으로 초기화한 로컬 값에는 타입 선언이 있을 수도 있고 없을 수도 있다.
+
+```Kotlin
+fun main() {
+    val name = MyJavaApi.getProperty("name")
+    println(name)
+}
+```
+
+## 7. 라이브러리를 위한 Coding Conventions
+라이브러리를 작성할 때 API의 안전성을 보장하기 위해 아래의 추가적인 규칙들을 따를 것
+
+- 항상 멤버의 가시성을 명시적으로 지정할 것(의도치 않게 `public` API로 선언되어 노출되지 않도록)
+- 항상 함수의 반환 타입과 속성 타입을 명시적으로 지정할 것(구현 변경 시 의도치 않게 반환 타입이 변경되지 않도록)
+- 새로운 주석이 필요 없는 오버라이드된 것들을 제외하고 모든 `public` 멤버에 대한 주석 제공(라이브러리 문서 생성 지원)
+
+
+## 참고
+
+> https://medium.com/@joongwon/kotlin-%EC%BD%94%EB%94%A9-%EC%BB%A8%EB%B2%A4%EC%85%98-%EC%A0%95%EB%A6%AC-7681cde920ce<br/>
+> https://offbyone.tistory.com/390<br/>
+> https://medium.com/mj-studio/%EC%BD%94%ED%8B%80%EB%A6%B0-%EC%9D%B4%EB%A0%87%EA%B2%8C-%EC%9E%91%EC%84%B1%ED%95%98%EC%8B%9C%EB%A9%B4-%EB%90%A9%EB%8B%88%EB%8B%A4-94871a1fa646
