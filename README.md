@@ -2,4 +2,4 @@
 
 1. [Commit Rules]
 2. [Kotlin Coding Convention](https://github.com/Dynamic-LAB/Document/blob/main/Kotlin_Coding_Convention.md)
-3. [Android Style Guide]
+3. [Android Style Guide](https://github.com/Dynamic-LAB/Document/blob/main/Android_Kotlin_Style_Guide.md)
