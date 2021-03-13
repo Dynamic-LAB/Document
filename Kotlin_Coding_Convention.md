@@ -12,7 +12,7 @@ https://kotlinlang.org/docs/coding-conventions.html#colon
 ### 소스 파일 이름
 - 클래스 이름과 동일
 - `.kt` 확장자
-- 첫 글자가 대문자인 Camel Case
+- PascalCase 사용
 
 ### 소스 파일 구성
 하나의 소스 파일에 여러 선언을 배치하는 것은 서로 연관되어 있고 파일 크기가 적절한 수준으로 유지되는 조건에 한해서 권장<br/>
@@ -38,8 +38,8 @@ https://kotlinlang.org/docs/coding-conventions.html#colon
 `Kotlin`은 `Java`의 네이밍 규칙을 따름
 
 패키지 이름은 소문자이며 `_`는 사용하지 않음<br/>
-여러 단어로 된 이름은 권장되지 않지만 사용할 경우 Camel Case 적용<br/>
-클래스와 객체의 이름은 대문자로 시작하고 Camel Case 사용<br/>
+여러 단어로 된 이름은 권장되지 않지만 사용할 경우 camelCase 적용<br/>
+클래스와 객체의 이름은 PascalCase 사용<br/>
 
 ```Kotlin
 open class DeclarationProcessor { /*...*/ }
@@ -47,7 +47,7 @@ object EmptyDeclarationProcessor : DeclarationProcessor() { /*...*/ }
 ```
 
 ### 함수 네이밍
-함수 속성 및 지역 변수의 이름은 소문자로 시작하는 Camel Case, `_`는 사용하지 않음<br/>
+함수 속성 및 지역 변수의 이름은 camelCase, `_`는 사용하지 않음<br/>
 
 ```Kotlin
 fun processDeclarations() { /*...*/ }
@@ -63,7 +63,7 @@ fun Foo(): Foo { return FooImpl() }
 ```
 
 ### 테스트 메소드 네이밍
-테스트에서만 ```으로 둘러싸서 공백 사용 허용 (Android 런타임에서 지원하지 않음)<br/>
+테스트에서만 백틱으로 둘러싸서 공백 사용 허용 (Android 런타임에서 지원하지 않음)<br/>
 `_`도 테스트 코드에서 사용 가능
 
 ```Kotlin
@@ -75,14 +75,14 @@ class MyTestCase {
 ```
 
 ### 속성 네이밍
-상수의 이름은 밑줄로 분리되는 대문자 사용
+상수의 이름은 UPPER_SNAKE_CASE 사용
 
 ```Kotlin
 const val MAX_COUNT = 8
 val USER_NAME_FIELD = "UserName"
 ```
 
-행동(behavior) 또는 상수를 가지는 최상위(top-level) 또는 object 속성의 이름은 Camel Case 사용
+행동(behavior) 또는 상수를 가지는 최상위(top-level) 또는 object 속성의 이름은 camelCase 사용
 
 ```Kotlin
 val mutableCollection: MutableSet<String> = HashSet()
@@ -94,7 +94,7 @@ singleton 객체에 대한 참조를 가지는 속성의 이름은 object 선언
 val PersonComparator: Comparator<Person> = /*...*/
 ```
 
-열거형 상수의 경우 밑줄로 구분되는 대문자 또는 대문자로 시작하는 Camel Case 사용
+열거형 상수의 경우 UPPER_SNAKE_CASE 또는 PascalCase 사용
 
 ### 후위 속성(backing properties) 네이밍
 클래스에 개념적으로는 동일하지만 하나는 public API의 일부이고 다른 하나는 상세 구현으로 `private`일 경우 `private` 속성의 접두사에 `_` 사용
