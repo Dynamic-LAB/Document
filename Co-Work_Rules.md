@@ -71,7 +71,7 @@ GitHub 이슈 번호 붙이기
 모든 활동들에 대해서 이슈를 등록하고 이슈 기반으로 작업 진행
 
 ## Issue Template
-/.github/ISSUE_TEMPLATE 참고
+sinsungo-android/.github/ISSUE_TEMPLATE 참고
 
 ## Project
 - Todo : issue가 만들어지면 자동 등록
@@ -81,7 +81,7 @@ GitHub 이슈 번호 붙이기
 # 4. Pull Request & Merge
 
 ## PR Template
-/.github/PULL_REQUEST_TEMPLATE.md 참고
+sinsungo-android/.github/PULL_REQUEST_TEMPLATE.md 참고
 
 ## PR Label
 Pull Request에 라벨 붙이기
