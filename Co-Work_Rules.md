@@ -71,24 +71,45 @@ GitHub 이슈 번호 붙이기
 모든 활동들에 대해서 이슈를 등록하고 이슈 기반으로 작업 진행
 
 ## Issue Template
-
+/.github/ISSUE_TEMPLATE 참고
 
 ## Project
-
+- Todo : issue가 만들어지면 자동 등록
+- In Progress : PR 시 자동 등록
+- Done : Merge 후 상태
 
 # 4. Pull Request & Merge
 
 ## PR Template
-
+/.github/PULL_REQUEST_TEMPLATE.md 참고
 
 ## PR Label
 Pull Request에 라벨 붙이기
-
-- 
+- Developing : PR은 만들었지만 개발중
+- Review Needed : 개발 완료 후 리뷰 필요
+- Answer for Review : 리뷰 완료 후 피드백 반영
+- In Review : 리뷰 진행 중
+- Merge Needed : Merge 대기 중
+- Simple : 리뷰가 필요없는 간단한 PR -> 올린 사람이 바로 Merge
+- Reviewer Name : 리뷰어 등록
+- Meeting Needed : PR에 대한 회의 필요
+- Stand By : 특정 이유로 진행하지 않고 대기
 
 ## Review
+기능 개발자 이외의 사람이 리뷰 담당
+- 코딩 컨벤션 준수 여부
+- 클린 아키텍처 적용
+- 빌드
+- 실행
+- 테스트
 
+### 리뷰어 짝
+
+
+### Feedback
+리뷰 진행 중 수정사항 또는 버그 발생 시 피드백 등록
+- 수정사항
+- 버그
 
 ## Merge
-
-
+PR에 대해 리뷰가 끝나면 Merge 진행
