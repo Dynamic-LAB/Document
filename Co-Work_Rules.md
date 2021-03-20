@@ -44,7 +44,7 @@ GitHub 이슈 번호 붙이기
 이슈 트래커 ID를 적을 때 사용
 
 # 2. Git Flow
-![image](https://user-images.githubusercontent.com/58630483/111866108-7975a500-89ae-11eb-8483-6036119d5292.png)
+![image](https://user-images.githubusercontent.com/58630483/111866498-3832c480-89b1-11eb-8590-c03282499b3f.png)
 
 ## Branch
 - master : 배포되었거나 배포될 소스가 저장되는 브랜치
