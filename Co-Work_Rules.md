@@ -76,7 +76,17 @@ GitHub 이슈 번호 붙이기
 ## Project
 
 
-# 4. Pull Request
+# 4. Pull Request & Merge
+
+## PR Template
 
 
-# 5. Code Review & Merge
+## PR Label
+
+
+## Review
+
+
+## Merge
+
+
