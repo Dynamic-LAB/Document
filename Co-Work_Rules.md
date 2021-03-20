@@ -82,7 +82,9 @@ GitHub 이슈 번호 붙이기
 
 
 ## PR Label
+Pull Request에 라벨 붙이기
 
+- 
 
 ## Review
 
