@@ -4,49 +4,76 @@
 
 ## 커밋 메시지 기본 Template
 ```
-#{이슈번호} [Label] : Title
+{#이슈번호} [type] : subject
 
-Message
+body
+
+footer
 ```
 
-커밋과 PR에는 이슈번호 Prefix로 붙이기
+- 한글로 작성 가능
+- 커밋과 PR은 가능한 작은 단위로 할 것
+- 커밋과 PR에는 이슈번호 Prefix로 붙이기
 
-## Label
-- FEATURE : 기능 개발
-- FIX : 버그 수정
-- VIEW : xml, resource 파일 수정 (코드 이외 파일 추가 또는 수정 시 사용)
-- DOCS : 문서 수정 및 추가
-- REFACTOR : 리팩토링
-- TEST : 테스트 관련 커밋
-- ETC : 동작에 영향을 주지 않는 사항
+## Issue Number
+GitHub 이슈 번호 붙이기
 
-## Title
-- 영문으로 작성
-- 첫 시작은 대문자
-- 변경점에 대한 설명
-- 50자 내외로 작성
+## Type
+타입은 타이틀에 포함되고 아래 중 하나로 구성
+- feat : 기능 개발
+- fix : 버그 수정
+- style : 코드 포맷팅, 세미콜론 누락 등 코드 변경이 없는 경우, xml, resource 파일 수정
+- docs : 문서 관련
+- refactor : 코드 리팩토링
+- test : 테스트 코드
+- chore : 빌드 업무 수정, 패키지 매니저 수정, 기타 코드 변경이 아닌 경우
 
-## Message
-- 커밋에 대한 추가 설명
-- 커밋 이유 설명
-- Title과 Message 사이에 공백 1줄 추가
+## Subject
+- 제목은 50자 이내로 작성
+- 명령조로 작성
+- 마침표를 붙이지 않는다
+- 변경점에 대한 요약
+
+## Body
+- 커밋에 대한 추가 설명, 커밋 이유 설명
+- How 보단 What, Why
+- Subject와 Body 사이에 공백 1줄 추가
 - 각 줄은 72자 내외로 작성
 
+## Footer
+이슈 트래커 ID를 적을 때 사용
+
 # 2. Git Flow
+![image](https://user-images.githubusercontent.com/58630483/111866108-7975a500-89ae-11eb-8483-6036119d5292.png)
 
-## Git Branch
-- Master : 출시 가능 상태 브랜치
-- Develop : 기능 개발 및 업데이트 반영 브랜치 (코드 통합, 서버 연동 등..)
-- Feature : 팀원 각자의 기능 개발 브랜치
-- Fix : 개발 완료된 기능의 버그 및 오류 수정 브랜치
+## Branch
+- master : 배포되었거나 배포될 소스가 저장되는 브랜치
+- develop : 다음 배포를 위한 개발을 진행하는 브랜치
+- feature : 팀원 각자에 의해 기능 단위 개발이 진행되는 브랜치
+- hotfix : 배포 버전에 생긴 문제로 긴급한 트러블슈팅이 필요할 때 개발이 진행되는 브랜치
+- release : 내부적으로 배포할 준비가 되었다고 생각되는 소스가 저장되는 브랜치
 
-## Git Flow
-1. 초기 프로젝트 생성 ➞ 완료
-2. Develop 브랜치 생성
-3. 팀원 각자 Feature 브랜치 생성 후 PR
-4. Code Review 진행(컨벤션 준수, 스타일 준수) 후 Develop 브랜치로 Merge
+## Flow
+1. master 브랜치에서 시작
+2. develop 브랜치 생성 -> 여기에서 개발 진행
+3. 기능 구현은 develop 브랜치에서 feature 브랜치를 생성하여 진행
+4. 완료된 feature 브랜치는 검토 후 develop 브랜치에 합친다.(Merge)
+5. 모든 기능 구현이 완료되면 develop 브랜치를 release 브랜치로 만든다.
+6. 버그 수정 및 QA 진행
+7. release 브랜치를 master 브랜치와 develop 브랜치로 보낸다.
+8. master 브랜치에서 버전 추가를 위해 태그를 생성하고 배포
+9. 배포 후 발생되는 버그는 hotfix 브랜치에서 수정 후 배포
 
 # 3. Project & Issue
+
+## Issue
+새로 개발할 기능, 수정할 기능, 버그 수정 등 모든 것이 이슈 단위로 관리<br/>
+모든 활동들에 대해서 이슈를 등록하고 이슈 기반으로 작업 진행
+
+## Issue Template
+
+
+## Project
 
 
 # 4. Pull Request
