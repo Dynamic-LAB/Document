@@ -22,11 +22,11 @@ GitHub 이슈 번호 붙이기
 타입은 타이틀에 포함되고 아래 중 하나로 구성
 - feat : 기능 개발
 - fix : 버그 수정
-- style : 코드 포맷팅, 세미콜론 누락 등 코드 변경이 없는 경우, xml, resource 파일 수정
+- style : 안드로이드 resource 파일 관련
 - docs : 문서 관련
-- refactor : 코드 리팩토링
-- test : 테스트 코드
-- chore : 빌드 업무 수정, 패키지 매니저 수정, 기타 코드 변경이 아닌 경우
+- refactor : clean code, 코드 리팩토링 관련
+- test : 테스트 관련
+- chore : gradle, manifest, 빌드 업무 수정, 패키지 매니저 수정, 코드 변경이 아닌 경우 등
 
 ## Subject
 - 제목은 50자 이내로 작성
@@ -56,13 +56,14 @@ GitHub 이슈 번호 붙이기
 ## Flow
 1. master 브랜치에서 시작
 2. develop 브랜치 생성 -> 여기에서 개발 진행
-3. 기능 구현은 develop 브랜치에서 feature 브랜치를 생성하여 진행
-4. 완료된 feature 브랜치는 검토 후 develop 브랜치에 합친다.(Merge)
-5. 모든 기능 구현이 완료되면 develop 브랜치를 release 브랜치로 만든다.
-6. 버그 수정 및 QA 진행
-7. release 브랜치를 master 브랜치와 develop 브랜치로 보낸다.
-8. master 브랜치에서 버전 추가를 위해 태그를 생성하고 배포
-9. 배포 후 발생되는 버그는 hotfix 브랜치에서 수정 후 배포
+3. 기능 구현은 develop 브랜치에서 feature 브랜치를 생성, 이슈마다 서브 브랜치를 생성하여 진행
+4. 완료된 이슈는 각 기능별 feature 브랜치로 합침
+5. 완료된 feature 브랜치는 검토 후 develop 브랜치에 합친다.(Merge)
+6. 모든 기능 구현이 완료되면 develop 브랜치를 release 브랜치로 만든다.
+7. 버그 수정 및 QA 진행
+8. release 브랜치를 master 브랜치와 develop 브랜치로 보낸다.
+9. master 브랜치에서 버전 추가를 위해 태그를 생성하고 배포
+10. 배포 후 발생되는 버그는 hotfix 브랜치에서 수정 후 배포
 
 # 3. Project & Issue
 
@@ -85,19 +86,20 @@ sinsungo-android/.github/PULL_REQUEST_TEMPLATE.md 참고
 
 ## PR Label
 Pull Request에 라벨 붙이기
-- Developing : PR은 만들었지만 개발중
-- Review Needed : 개발 완료 후 리뷰 필요
-- Answer for Review : 리뷰 완료 후 피드백 반영
+- In Develop : PR은 만들었지만 현재 기능 개발중
+- Review Needed : 개발 완료 후 Merge 전 리뷰 필요
 - In Review : 리뷰 진행 중
-- Merge Needed : Merge 대기 중
-- Simple : 리뷰가 필요없는 간단한 PR -> 올린 사람이 바로 Merge
+- Apply Feedback : 리뷰 완료 후 피드백 반영
+- Merge Needed : Merge 가능 상태
+- Simple : 리뷰가 필요없는 간단한 PR, 바로 Merge 해도 무방
 - Reviewer Name : 리뷰어 등록
 - Meeting Needed : PR에 대한 회의 필요
-- Stand By : 특정 이유로 진행하지 않고 대기
+- Stand By : 해당 PR 진행 중지
 
 ## Review
 기능 개발자 이외의 사람이 리뷰 담당
-- 코딩 컨벤션 준수 여부
+- 코딩 컨벤션 준수 여부 -> ktlint 자동화
+- 클린 코드
 - 클린 아키텍처 적용
 - 빌드
 - 실행
