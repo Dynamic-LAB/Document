@@ -8,7 +8,7 @@ What_Where
 - fragment_ : 프래그먼트에서 쓰이는 레이아웃 파일
 - dialog_ : 다이얼로그에서 쓰이는 레이아웃 파일
 - view_ : 커스텀 뷰에서 쓰이는 레이아웃 파일
-- itme_ : 리사이클러뷰, 리스트 뷰 등에서 ViewHolder에 쓰이는 레이아웃 파일(각 아이템 항목에 대한)
+- item_ : 리사이클러뷰, 리스트 뷰 등에서 ViewHolder에 쓰이는 레이아웃 파일(각 아이템 항목에 대한)
 - layout_ : 재사용 되는 공통 레이아웃
 
 ## ID
@@ -19,8 +19,6 @@ What_Where
 - Description이 여러 단어인 경우 모두 소문자인 snake_case로 지정
 
 ex) TextView -> tv_
-
-Button, ImageButton보다 TextView와 ImageView 사용 권장
 
 ## Drawable
 - What_Where_Description_Size
